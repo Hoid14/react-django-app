@@ -1,8 +1,19 @@
 from rest_framework import serializers
-from .models import Note
+from .models import *
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = ('id', 'title', 'description', 'created_at')
         read_only_fields = ('created_at',) 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+        
+class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False, read_only=True)
+    class Meta:
+        model = Profile
+        fields = ('user', 'first_name', 'last_name', 'email')
