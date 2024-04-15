@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContextProvider'
 
 export const Header = () => {
-    let [user, setUser] = useState(null)
-    let logoutUser = (e) => {
-        e.preventDefault()
-    }
+    const { user, logoutUser } = useContext(AuthContext)
+    
     return (
         <div>
             <Link to="/">Home</Link>

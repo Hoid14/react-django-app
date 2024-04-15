@@ -1,9 +1,9 @@
+import { useContext } from "react"
+import { AuthContext } from "../context/AuthContextProvider"
 
 export const LoginPage = () => {
-    let loginUser = (e) => {
-        e.preventDefault()
-    }
-
+    const { loginUser } = useContext(AuthContext)
+    
     return (
         <div>
             <form onSubmit={loginUser}>
