@@ -46,13 +46,13 @@ export const AuthContextProvider = ({children}) => {
           username:e.target.username.value,
           password:e.target.password.value
         })
-        .then((response)=>{
-          console.log(response)
+        .then(()=>{
+          navigate('/login')
         })
-      .catch((error) => {
-        alert(error)
+      .catch(() => {
+        alert('Failed to register. Please try again.')
       })
-      navigate('/login')
+      
     }
 
   const contextData = {
