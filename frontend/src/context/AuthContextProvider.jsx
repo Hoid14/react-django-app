@@ -9,12 +9,14 @@ export const AuthContextProvider = ({children}) => {
 
   const [user, setUser] = useState(() => (localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null))
   const [authTokens, setAuthTokens] = useState(() => (localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null))
-  
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
   const loginUser = async (e) =>{
+    setLoading(true)
     e.preventDefault()
+    
     api
     .post("/api/token/", {
       username:e.target.username.value,
@@ -27,8 +29,15 @@ export const AuthContextProvider = ({children}) => {
       navigate('/')
     })
     .catch(error =>{
-      alert(error)
+      if (error.response && error.response.status === 401) {
+        alert('Invalid username or password.');
+      } else {
+        alert('An error occurred. Please try again.');
+      }
     })
+    .finally(
+      setLoading(false)
+    )
   }
 
   const logoutUser = () =>{
@@ -79,6 +88,7 @@ export const AuthContextProvider = ({children}) => {
     loginUser: loginUser,
     registerUser: registerUser,
     logoutUser: logoutUser,
+    loading:loading,
   }
 
   useEffect(()=>{

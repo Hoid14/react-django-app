@@ -1,8 +1,9 @@
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContextProvider"
+import { LoadingIndicator } from "../components/LoadingIndicator"
 
 export const LoginPage = () => {
-    const { loginUser } = useContext(AuthContext)
+    const { loginUser, loading } = useContext(AuthContext)
     
     return (
         <div>
@@ -12,6 +13,7 @@ export const LoginPage = () => {
                 <input type="password" name="password" placeholder="enter password"/>
                 <input type="submit"/>
             </form>
+            {loading && <LoadingIndicator />}
         </div>
     )
 }
