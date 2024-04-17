@@ -1,36 +1,100 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContextProvider"
+import { api } from "../api";
+import { Note } from "../components/Note";
 
 export const HomePage = () => {
-    const { authTokens, logoutUser } = useContext(AuthContext);
-    let [profile, setProfile] = useState([])
+    const { authTokens } = useContext(AuthContext);
+
+    const [notes, setNotes] = useState([]);
+    const [content, setContent] = useState("");
+    const [title, setTitle] = useState("");
+
     
     useEffect(() => {
-        getProfile()
-    },[])
+        getNotes();
+    }, []);
 
-    const getProfile = async() => {
-        let response = await fetch('http://127.0.0.1:8000/api/profile', {
-        method: 'GET',
-        headers:{
-            'Content-Type': 'application/json',
-            'Authorization':'Bearer ' + String(authTokens.access)
-        }
-        })
-        let data = await response.json()
-        console.log(data)
-        if(response.status === 200){
-            setProfile(data)
-        } else if(response.statusText === 'Unauthorized'){
-            logoutUser()
-        }
+    const getNotes = () => {
+        api
+            .get("/api/notes/", {
+                headers: {
+                    'Authorization': 'Bearer ' + String(authTokens.access)
+                }
+            })
+            .then((res) => res.data)
+            .then((data) => {
+                setNotes(data)
+            })
+            .catch((err) => alert(err));
+    };
+
+    const deleteNote = (id) => {
+        api
+            .delete(`/api/notes/delete/${id}/`,{
+                headers: {
+                    'Authorization': 'Bearer ' + String(authTokens.access)
+                }
+            })
+            .then((res) => {
+                if (res.status === 204) alert("Note deleted!");
+                else alert("Failed to delete note.");
+                getNotes()
+            })
+            .catch((error) => alert(error));
     }
+
+    const createNote = (e) => {
+        e.preventDefault();
+        api
+            .post("/api/notes/", { title, content }, {
+                headers: {
+                    'Authorization': 'Bearer ' + String(authTokens.access)
+                }
+            })
+            .then((res) => {
+                if (res.status === 201) alert("Note created!");
+                else alert("Failed to make note.");
+                getNotes();
+            })
+            .catch((err) => alert(err));
+    };
 
     return (
         <div>
-            <p>You are logged in to the homepage!</p>
-            <p>Name: {profile.first_name} {profile.last_name}</p>
-            <p>Email: {profile.email}</p>
+            
+            <h2>Create a Note</h2>
+            <form onSubmit={createNote}>
+                <label htmlFor="title">Title:</label>
+                <br />
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    required
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                />
+                <label htmlFor="content">Content:</label>
+                <br />
+                <textarea
+                    id="content"
+                    name="content"
+                    required
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                ></textarea>
+                <br />
+                <input type="submit" value="Submit"></input>
+            </form>
+
+
+            <div>
+                <h2>Notes</h2>
+                {notes.map((note) => (
+                    <Note note={note} onDelete={deleteNote} key={note.id} />
+                ))}
+            </div>
         </div>
-    )
+    );
 }
