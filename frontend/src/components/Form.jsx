@@ -1,8 +1,15 @@
 
 import { LoadingIndicator } from "./LoadingIndicator"
 import "../styles/form.css"
+import { useContext, useEffect } from "react"
+import { AuthContext } from "../context/AuthContextProvider"
 
 export const Form = ({name, handleSubmit, loading }) => {
+    const { logoutUser } = useContext(AuthContext)
+
+    useEffect(()=>{
+        logoutUser()
+    },[])
     
   return (
         <div>
