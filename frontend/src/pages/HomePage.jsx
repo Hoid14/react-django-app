@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/AuthContextProvider"
 import { api } from "../api";
 import { Note } from "../components/Note";
+import "../styles/homePage.css"
 
 export const HomePage = () => {
     const { authTokens } = useContext(AuthContext);
