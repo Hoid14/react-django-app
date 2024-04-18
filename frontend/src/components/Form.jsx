@@ -5,12 +5,16 @@ export const Form = ({name, handleSubmit, loading }) => {
     
   return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <h2>{name}</h2>
-                <input type="text" name="username" placeholder="Enter username"/>
-                <input type="password" name="password" placeholder="enter password"/>
-                <input type="submit"/>
+            <form onSubmit={handleSubmit} className="form-container">
+                <h1>{name}</h1>
+                <input className="form-input" type="text" name="username" placeholder="Enter username"/>
+                <input className="form-input" type="password" name="password" placeholder="enter password"/>
+                
                 {loading && <LoadingIndicator />}
+                
+                <button className="form-button" type="submit">
+                    {name}
+                </button>
             </form>
         </div>
   )
