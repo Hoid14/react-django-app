@@ -35,10 +35,11 @@ export const AuthContextProvider = ({children}) => {
         alert('An error occurred. Please try again.');
       }
     })
-    .finally(
-      setLoading(false)
+    .finally(()=>setLoading(false)
     )
   }
+
+  
 
   const logoutUser = () =>{
     
@@ -49,6 +50,7 @@ export const AuthContextProvider = ({children}) => {
   }
     
     const registerUser = async (e) =>{
+      setLoading(true)
       e.preventDefault()
         api
         .post('/api/user/register/',{
@@ -61,6 +63,7 @@ export const AuthContextProvider = ({children}) => {
       .catch(() => {
         alert('Failed to register. Please try again.')
       })
+      .finally(()=>setLoading(false))
       
     }
 
