@@ -5,7 +5,7 @@ import { Note } from "../components/Note";
 import "../styles/homePage.css"
 
 export const HomePage = () => {
-    const { authTokens } = useContext(AuthContext);
+    const { user, authTokens } = useContext(AuthContext);
 
     const [notes, setNotes] = useState([]);
     const [content, setContent] = useState("");
@@ -63,9 +63,8 @@ export const HomePage = () => {
 
     return (
         <div>
-            
-            <h2>Create a Note</h2>
             <form onSubmit={createNote}>
+                <h2 className="form-title">Create a Note</h2>
                 <label htmlFor="title">Title:</label>
                 <br />
                 <input
