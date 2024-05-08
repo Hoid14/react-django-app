@@ -1,0 +1,13 @@
+### Get list of notes
+GET http://localhost:8000/api/notes/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1MTI5ODIwLCJpYXQiOjE3MTUxMjk1MjAsImp0aSI6IjYzZGU1NjQ2ZDZiZTRlN2JhNGU3YzAzNjczY2M0ZmFkIiwidXNlcl9pZCI6NiwidXNlcm5hbWUiOiJob2lkIn0.Iplvg9enboHwtuJRTSyq2H7iIG-JL81mT_QXSx048p0
+
+### Create a new note
+POST http://localhost:8000/api/notes/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1MTI5ODIwLCJpYXQiOjE3MTUxMjk1MjAsImp0aSI6IjYzZGU1NjQ2ZDZiZTRlN2JhNGU3YzAzNjczY2M0ZmFkIiwidXNlcl9pZCI6NiwidXNlcm5hbWUiOiJob2lkIn0.Iplvg9enboHwtuJRTSyq2H7iIG-JL81mT_QXSx048p0
+
+{
+    "title": "Nota de sergio",
+    "content": "This is the content of my new note."
+}
